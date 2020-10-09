@@ -10,6 +10,14 @@ echo "Work directory            : ${PWD}"
 echo "============================================"
 echo
 
+echo "pecl install protobuf"
+pecl install protobuf
+echo "pecl install grpc"
+pecl install grpc
+echo "pecl install xhprof"
+pecl install xhprof
+echo "pecl install apcu "
+pecl install apcu
 
 if [ "${ALPINE_REPOSITORIES}" != "" ]; then
     sed -i "s/dl-cdn.alpinelinux.org/${ALPINE_REPOSITORIES}/g" /etc/apk/repositories
@@ -28,6 +36,8 @@ fi
 
 if [ -z "${EXTENSIONS##*,zip,*}" ]; then
     echo "---------- Install zip ----------"
+    apt-get install -y zlib1g-dev
+    apt-get install -y unzip
 	docker-php-ext-install ${MC} zip
 fi
 

@@ -1,5 +1,7 @@
 ARG PHP_VERSION
+# please use ./docker_php generate image
 FROM php:${PHP_VERSION}-fpm-alpine
+USER root
 
 ARG PHP_EXTENSIONS
 ARG MORE_EXTENSION_INSTALLER
