@@ -20,6 +20,7 @@
 * MongoDB 服务
 * Mongo Express - MongoDB 服务管理系统
 * [xhgui](https://github.com/laynefyc/xhgui-branch) - xhprof 分析数据数据的 GUI 系统
+* [pecl](https://pecl.php.net/)
 
 ![](docs/dnmp-plus.png)
 

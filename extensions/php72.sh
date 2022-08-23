@@ -30,7 +30,7 @@ fi
 if [ -z "${EXTENSIONS##*,redis,*}" ]; then
     echo "---------- Install redis ----------"
     mkdir redis \
-    && tar -xf redis-4.1.1.tgz -C redis --strip-components=1 \
+    && tar -xf redis-5.3.7.tgz -C redis --strip-components=1 \
     && ( cd redis && phpize && ./configure && make ${MC} && make install ) \
     && docker-php-ext-enable redis
 fi
@@ -56,7 +56,7 @@ fi
 if [ -z "${EXTENSIONS##*,swoole,*}" ]; then
     echo "---------- Install swoole ----------"
     mkdir swoole \
-    && tar -xf swoole-4.5.2.tgz -C swoole --strip-components=1 \
+    && tar -xf swoole-5.0.0.tgz -C swoole --strip-components=1 \
     && ( cd swoole && phpize && ./configure --enable-openssl --enable-http2 && make ${MC} && make install ) \
     && docker-php-ext-enable swoole
 fi
