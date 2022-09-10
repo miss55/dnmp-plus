@@ -17,7 +17,7 @@ RUN sed -i "s/dl-cdn.alpinelinux.org/${ALPINE_REPOSITORIES}/g" /etc/apk/reposito
     && apk add --no-cache autoconf g++ libtool make curl-dev libxml2-dev linux-headers
 RUN apk add shadow && usermod -u 1000 www-data && groupmod -g 1000 www-data
 
-RUN php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.php');" && php composer-setup.php && php -r "unlink('composer-setup.php');" && sudo mv composer.phar /usr/local/bin/composer;
+RUN php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.php');" && php composer-setup.php && php -r "unlink('composer-setup.php');" &&  mv composer.phar /usr/local/bin/composer;
 
 RUN export MC="-j$(nproc)" \
     && chmod +x install.sh \
