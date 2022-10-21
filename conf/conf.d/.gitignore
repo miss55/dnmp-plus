@@ -1,3 +1,4 @@
+*
 !.gitignore
 !certs/localhost/
 !localhost_php72.conf

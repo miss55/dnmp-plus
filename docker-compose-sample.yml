@@ -5,8 +5,6 @@ services:
     ports:
       - "${NGINX_HTTP_HOST_PORT}:80"
       - "${NGINX_HTTPS_HOST_PORT}:443"
-      # 8082 yii demo
-      - "${NGINX_8080_HOST_PORT}:8080-8090"
       
     volumes:
       - ${SOURCE_DIR}:/var/www/html/:rw
@@ -31,15 +29,33 @@ services:
       - ${PHP72_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
       - ${PHP72_LOG_DIR}:/var/log/php
       - ${PHP72_LOG_XHPROF_DIR}:/var/log/xhprof
-    ports:
-      # easy 8500, yii-demo 8502
-      - "8500-8510:8500-8510"
     restart: always
     cap_add:
       - SYS_PTRACE
     networks:
       - default
-
+  php8:
+    build:
+      context: ./services/php8
+      args:
+        PHP_VERSION: php:${PHP8_VERSION}-fpm-alpine
+        ALPINE_REPOSITORIES: ${ALPINE_REPOSITORIES}
+        PHP_EXTENSIONS: ${PHP8_EXTENSIONS}
+        TZ: "$TZ"
+    container_name: php8
+    expose:
+      - 9501
+    volumes:
+      - ${SOURCE_DIR}:/www/:rw
+      - ${PHP8_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
+      - ${PHP8_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ${PHP8_LOG_DIR}:/var/log/php
+      - ${DIR_DATA}/composer:/tmp/composer
+    restart: always
+    cap_add:
+      - SYS_PTRACE
+    networks:
+      - default
   php56:
     build:
       context: .
@@ -187,7 +203,7 @@ services:
     container_name: kafa-manager
     ports:
       - "9090:9000"
-    depends_on:            # 连接本compose文件创建的container
+    depends_on:
       - kafka1
       - kafka2
       - zookeeper

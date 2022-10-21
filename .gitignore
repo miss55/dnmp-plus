@@ -5,3 +5,5 @@ docker-compose.yml
 www/*
 !www/localhost/
 .php_cs.cache
+mypass
+logs/*
