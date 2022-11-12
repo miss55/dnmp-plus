@@ -6,12 +6,17 @@ USER root
 ARG PHP_EXTENSIONS
 ARG MORE_EXTENSION_INSTALLER
 ARG ALPINE_REPOSITORIES
+ARG TZ
 
 COPY ./extensions /tmp/extensions
 WORKDIR /tmp/extensions
 
 ENV EXTENSIONS=",${PHP_EXTENSIONS},"
 ENV MC="-j$(nproc)"
+
+RUN apk --no-cache add tzdata \
+    && cp "/usr/share/zoneinfo/$TZ" /etc/localtime \
+    && echo "$TZ" > /etc/timezone
 
 RUN sed -i "s/dl-cdn.alpinelinux.org/${ALPINE_REPOSITORIES}/g" /etc/apk/repositories \
     && apk add --no-cache autoconf g++ libtool make curl-dev libxml2-dev linux-headers
