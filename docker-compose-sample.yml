@@ -16,7 +16,16 @@ services:
     restart: always
     networks:
       - default
-
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ${SOURCE_DIR}:/var/www/html/:rw
+      - ${CERTBOT_ETC_LETSENCRYPT_DIR}:/etc/letsencrypt
+      - ${CERTBOT_VAR_LIB_DIR}:/var/lib/letsencrypt:rw
+    command: ["--version"]
+    restart: always
+    networks:
+      - default
   php72:
     build:
       context: ./services/php7
