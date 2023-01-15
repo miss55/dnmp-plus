@@ -16,6 +16,7 @@ services:
     restart: always
     networks:
       - default
+  # use docker-compose run --rm certbot certonly --webroot -w /var/www/html/{your project} -d domain --agree-tos --renew-by-default  --text --email {your email}
   certbot:
     image: certbot/certbot
     volumes:
