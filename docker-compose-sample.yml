@@ -1,10 +1,11 @@
 version: "3"
 services:
   nginx:
-    build:
-      context: ./services/nginx
-      args:
-        ENABLED_MODULES: ${NGINX_ENABLED_MODULES}
+    image: jenson/nginx:1.21.5
+    # build:
+    #   context: ./services/nginx
+    #   args:
+    #     ENABLED_MODULES: ${NGINX_ENABLED_MODULES}
     ports:
       - "${NGINX_HTTP_HOST_PORT}:80"
       - "${NGINX_HTTPS_HOST_PORT}:443"
@@ -71,17 +72,19 @@ services:
       - default
   php56:
     build:
-      context: .
+      context: ./services/php7
       args:
-        PHP_VERSION: ${PHP56_VERSION}
+        PHP_VERSION: php:${PHP56_VERSION}-fpm-alpine
         ALPINE_REPOSITORIES: ${ALPINE_REPOSITORIES}
         PHP_EXTENSIONS: ${PHP56_EXTENSIONS}
+        TZ: "$TZ"
         MORE_EXTENSION_INSTALLER: php56.sh
     volumes:
       - ${SOURCE_DIR}:/var/www/html/:rw
       - ${PHP56_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
       - ${PHP56_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
       - ${PHP56_LOG_DIR}:/var/log/php
+      - ${DIR_DATA}/composer:/tmp/composer
     restart: always
     cap_add:
       - SYS_PTRACE
