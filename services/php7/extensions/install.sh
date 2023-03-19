@@ -10,14 +10,25 @@ echo "Work directory            : ${PWD}"
 echo "============================================"
 echo
 
-echo "pecl install protobuf"
-pecl install protobuf
-echo "pecl install grpc"
-pecl install grpc
-echo "pecl install xhprof"
-pecl install xhprof
-echo "pecl install apcu "
-pecl install apcu
+if [ -z "${EXTENSIONS##*,protobuf,*}" ]; then
+    echo "---------- Install protobuf ----------"
+    docker-php-ext-install ${MC} protobuf
+fi
+
+if [ -z "${EXTENSIONS##*,grpc,*}" ]; then
+    echo "---------- Install grpc ----------"
+    docker-php-ext-install ${MC} grpc
+fi
+
+if [ -z "${EXTENSIONS##*,xhprof,*}" ]; then
+    echo "---------- Install xhprof ----------"
+    docker-php-ext-install ${MC} xhprof
+fi
+
+if [ -z "${EXTENSIONS##*,apcu,*}" ]; then
+    echo "---------- Install apcu ----------"
+    docker-php-ext-install ${MC} apcu
+fi
 
 
 
